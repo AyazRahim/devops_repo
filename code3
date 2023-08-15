@@ -1,0 +1,52 @@
+package com.todolist;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ToDoList toDoList = new ToDoList();
+
+        while (true) {
+            System.out.println("1. Add Task");
+            System.out.println("2. List Tasks");
+            System.out.println("3. Mark Task as Completed");
+            System.out.println("4. Exit");
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task description: ");
+                    String description = scanner.nextLine();
+                    Task task = new Task(description);
+                    toDoList.addTask(task);
+                    System.out.println("Task added.");
+                    break;
+                case 2:
+                    List<Task> tasks = toDoList.getTasks();
+                    for (int i = 0; i < tasks.size(); i++) {
+                        Task t = tasks.get(i);
+                        System.out.println((i + 1) + ". " + t.getDescription() + " - " + (t.isCompleted() ? "Completed" : "Not Completed"));
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter task number to mark as completed: ");
+                    int taskNumber = scanner.nextInt();
+                    Task selectedTask = toDoList.getTasks().get(taskNumber - 1);
+                    selectedTask.markAsCompleted();
+                    System.out.println("Task marked as completed.");
+                    break;
+                case 4:
+                    System.out.println("Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select a valid option.");
+            }
+        }
+    }
+}
+
